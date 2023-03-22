@@ -1,23 +1,34 @@
-import logo from './logo.svg';
+import Goal from './Goal';
+import TaskList from './TaskList';
 import './App.css';
-
+import { useState } from 'react';
 function App() {
+  const [a, setA] = useState(false);
+  const items = [
+    
+
+  ]
+  const [listItems, setListItems] = useState(items);
+  const newTaskAdded = (task) => {
+    const newList = [task, ...listItems];
+    setListItems(newList);
+  }
+  const taskDone1 = (taskDone) => {
+    const newItems = listItems.filter((item) => {
+      
+      return item !== taskDone;
+
+
+    })
+    setA(true);
+    setListItems(newItems);
+  }
+
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      <Goal newTaskAdded={newTaskAdded} />
+      <TaskList items={listItems} updateList={taskDone1} addmsg={a} />
     </div>
   );
 }
