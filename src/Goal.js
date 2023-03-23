@@ -8,8 +8,8 @@ const FormData = styled.form`
     flex-direction: column;
     align-items: start;
     justify-content: center;
-    width: 50%;
-    margin: 5rem  auto;
+    width: 60%;
+    margin: 2rem auto;
     height: 10rem;
     background-color: #fff;
     padding: 0 3rem;
@@ -70,10 +70,10 @@ function Goal(props){
     const onClickHandler = (e) => {
         e.preventDefault();
         task = value;
-        if(value.trim().length === 0){
-            setIsValid(false);
-            return;
-        }
+        // if(value.trim().length === 0){
+        //     setIsValid(false);
+        //     return;
+        // }
         props.newTaskAdded(task);
         // console.log(task);
         setValue('');
@@ -85,7 +85,7 @@ function Goal(props){
         setValue(e.target.value);
     }
     return (
-        <div>
+        
             <FormData invalid={!isValid}>
                 <label >Today's Goal</label>
                 <input type="text" value={value || ''} onChange={onChangeHandler} placeholder="Enter Task"/>
@@ -93,7 +93,7 @@ function Goal(props){
             </FormData>
             
 
-        </div>
+    
     )
 }
 export default Goal;
