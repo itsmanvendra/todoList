@@ -1,7 +1,8 @@
 import Goal from './Goal';
 import TaskList from './TaskList';
 import './App.css';
-import { useState } from 'react';
+import { useState, Fragment } from 'react';
+import ReactDOM from 'react-dom';
 function App() {
   const[warn, setWarn] = useState(false);
   
@@ -37,23 +38,31 @@ function App() {
 
   }
 
-
-  return (
-    <div className='mainContainer'>
-      <Goal newTaskAdded={newTaskAdded} />
-      <TaskList items={listItems} updateList={taskDone1} addmsg={a} />
-      <div onClick={onClickHandler} className={`${warn ? 'warning' : 'hidden'}`}>
+  const Modal = (props) => {
+    return (
+      <div onClick={props.onClickHandler} className={`${props.warn ? 'warning' : 'hidden'}`}>
         <div className='modal'>
           <div className='warning__heading'>
             Invalid Input
           </div>
           <div className='warning__container'>
             Please enter valid task!
-            <button onClick={onClickHandler}>Okay</button>
+            <button onClick={props.onClickHandler}>Okay</button>
           </div>
         </div>
       </div>
-    </div>
+    )
+
+  }
+
+
+
+  return (
+    <Fragment className='mainContainer'>
+      <Goal newTaskAdded={newTaskAdded} />
+      <TaskList items={listItems} updateList={taskDone1} addmsg={a} />
+      {ReactDOM.createPortal(<Modal warn={warn} onClickHandler={onClickHandler} />, document.getElementById('modal'))}
+    </Fragment>
   );
 }
 

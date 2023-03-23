@@ -1,5 +1,5 @@
 
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 import styled from 'styled-components';
 
 const FormData = styled.form`
@@ -23,13 +23,13 @@ const FormData = styled.form`
     font-size: 1.5rem;
     font-weight: 700;
     margin: 10px 0 5px 0;
-    color: ${props => props.invalid ? 'red' : 'black'}
+    color:  black;
     }
 
     & input{
     width: 100%;
     height: 2rem;
-    border: 2px solid ${(props) => props.invalid ? 'red' : '#ccc'};
+    border: 2px solid #ccc;
     /* border-radius: 5px; */
     padding: 0 1rem;
     box-sizing: border-box;
@@ -65,30 +65,35 @@ const FormData = styled.form`
 
 function Goal(props){
     let task;
-    const [value, setValue] = useState('');
-    const [isValid, setIsValid] = useState(true);
+    const inputValue = useRef();
+    // const [value, setValue] = useState('');
+    // const [isValid, setIsValid] = useState(true);
     const onClickHandler = (e) => {
         e.preventDefault();
-        task = value;
+        // console.log(inputValue);
+        task = inputValue.current.value;
+        // task = value;
         // if(value.trim().length === 0){
         //     setIsValid(false);
         //     return;
         // }
+        inputValue.current.value = '';
         props.newTaskAdded(task);
         // console.log(task);
-        setValue('');
+        // setValue('');
     }
-    const onChangeHandler = (e) => {
-        if(e.target.value.trim().length > 0){
-            setIsValid(true);
-        }
-        setValue(e.target.value);
-    }
+    // const onChangeHandler = (e) => {
+    //     if(e.target.value.trim().length > 0){
+    //         setIsValid(true);
+    //     }
+        
+    //     // setValue(e.target.value);
+    // }
     return (
         
-            <FormData invalid={!isValid}>
+            <FormData >
                 <label >Today's Goal</label>
-                <input type="text" value={value || ''} onChange={onChangeHandler} placeholder="Enter Task"/>
+                <input type="text"   placeholder="Enter Task" ref={inputValue}/>
                 <button onClick={onClickHandler}>Add Goal</button>
             </FormData>
             
